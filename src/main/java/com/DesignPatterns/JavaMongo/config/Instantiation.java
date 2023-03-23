@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.DesignPatterns.JavaMongo.domain.Post;
 import com.DesignPatterns.JavaMongo.domain.User;
 import com.DesignPatterns.JavaMongo.dto.AuthorDTO;
+import com.DesignPatterns.JavaMongo.dto.CommentDTO;
 import com.DesignPatterns.JavaMongo.repository.PostRepository;
 import com.DesignPatterns.JavaMongo.repository.UserRepository;
 
@@ -39,8 +40,14 @@ public class Instantiation implements CommandLineRunner{
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
 		Post post1 = new Post(null, sdf.parse("21/03/2023"), "Começando o bootcamp", "Estou começando o bootcamp Java na Dio!", new AuthorDTO(maria));
-		Post post2 = new Post(null, sdf.parse("22/03/2023"), "Java é legal!", "minhas primeiras linhas com Java, estou amando!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("22/03/2023"), "Java é legal!", "eu adoro programar em Java!", new AuthorDTO(maria));
 		
+		CommentDTO c1 = new CommentDTO("Estou começando também!", sdf.parse("21/03/2023"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Já programo em Java, vou fazer o bootcamp para aprofundar meus conhecimentos.", sdf.parse("21/03/2023"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Bacana! estou com dificuldades em Arrays.. poderia me ajudar?", sdf.parse("21/03/2023"), new AuthorDTO(alex));
+		
+		post1.getComments().addAll(Arrays.asList(c1,c2));
+		post2.getComments().addAll(Arrays.asList(c3));
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
 		maria.getPosts().addAll(Arrays.asList(post1,post2));
