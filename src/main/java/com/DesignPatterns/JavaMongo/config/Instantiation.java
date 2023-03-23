@@ -30,6 +30,7 @@ public class Instantiation implements CommandLineRunner{
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		userRepository.deleteAll();
+		postRepository.deleteAll();
 
 		
 		User maria = new User(null, "Maria Brown", "maria@gmail.com");
@@ -40,8 +41,10 @@ public class Instantiation implements CommandLineRunner{
 		Post post1 = new Post(null, sdf.parse("21/03/2023"), "Começando o bootcamp", "Estou começando o bootcamp Java na Dio!", new AuthorDTO(maria));
 		Post post2 = new Post(null, sdf.parse("22/03/2023"), "Java é legal!", "minhas primeiras linhas com Java, estou amando!", new AuthorDTO(maria));
 		
-		
 		postRepository.saveAll(Arrays.asList(post1, post2));
+		
+		maria.getPosts().addAll(Arrays.asList(post1,post2));
+		userRepository.save(maria);
 		
 	}
 
