@@ -15,6 +15,9 @@ import com.DesignPatterns.JavaMongo.domain.Post;
 import com.DesignPatterns.JavaMongo.resources.util.URL;
 import com.DesignPatterns.JavaMongo.services.PostService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+
 @RestController
 @RequestMapping(value = "/posts")
 public class PostResource {
@@ -24,6 +27,8 @@ public class PostResource {
 	
 	
 	@GetMapping("{id}")
+	@ApiOperation("Busca um Post por Id")
+	@ApiResponse(code = 201, message = "Post encontrado com sucesso")
 	public ResponseEntity<Post> findById(@PathVariable String id){
 		
 		Post obj = postService.findById(id);
@@ -31,6 +36,8 @@ public class PostResource {
 	}
 	
 	@GetMapping("/titlesearch")
+	@ApiOperation("Buscar post pelo título (DESCONTINUADO)")
+	@ApiResponse(code = 200, message = "Post encontrado com sucesso")
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue = "") String text){
 		
 		text = URL.decodeParam(text);
@@ -40,6 +47,8 @@ public class PostResource {
 	
 	
 	@GetMapping("/fullsearch")
+	@ApiOperation("Buscar palavras chaves com data mínima e máxima")
+	@ApiResponse(code = 200, message = "Encontrado.")
 	public ResponseEntity<List<Post>> fullSearch(
  			@RequestParam(value="text", defaultValue="") String text,
  			@RequestParam(value="minDate", defaultValue="") String minDate,
